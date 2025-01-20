@@ -77,7 +77,7 @@ useEffect(() => {
     }
   };
 
-  const handleDownload = async () => {
+  const handleDownload = async (template:any) => {
     try {
       let html = EmailLayout(`${titleColor}`);
       console.log(html , "html" , "template.title" , template.title);
@@ -86,7 +86,7 @@ useEffect(() => {
       html = html
         .replace('{{title}}', template.title)
         .replace('{{content}}', template.content)
-        .replace('{{imageUrl}}', template.imageUrl)
+        .replace('{{imageUrl}}', "http://localhost:3000/" + template.imageUrl)
         .replace('{{footer}}', template.footer);
         console.log(html , "html" , "template.title" , template.title);
      
@@ -122,7 +122,7 @@ useEffect(() => {
                 Save
               </button>
               <button
-                onClick={handleDownload}
+                onClick={()=>handleDownload(template)}
                 className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm"
               >
                 <Download size={20} />
@@ -220,7 +220,17 @@ useEffect(() => {
           emailLayout?.map((e:any,index)=>{
             console.log(e.title , "eeeeeeeeee")
             return (
-              <div key={index}
+          <div className="">
+           <div style={{display:'flex' , justifyContent:"end"}}>
+           <button
+                onClick={()=>handleDownload(e)}
+                className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm"
+              >
+                <Download size={20} />
+                Download
+              </button>
+           </div>
+    <div key={index}
               className="prose max-w-none p-4 border border-gray-100 rounded-lg bg-gray-50"
               dangerouslySetInnerHTML={{
                 __html: EmailLayout(`${titleColor}`)
@@ -230,6 +240,7 @@ useEffect(() => {
                   .replace('{{footer}}', e.footer)
               }}
             />
+          </div>
             )
           })
         }
