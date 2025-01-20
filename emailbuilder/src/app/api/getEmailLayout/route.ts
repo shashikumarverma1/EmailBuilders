@@ -1,6 +1,9 @@
+import { conectDb } from '@/helper/db';
 import { NextRequest, NextResponse } from 'next/server';
 
+
 export async function GET(request: NextRequest) {
+  conectDb()
   try {
     // Parse query parameters from the request URL
     // const { searchParams } = new URL(request.url);
