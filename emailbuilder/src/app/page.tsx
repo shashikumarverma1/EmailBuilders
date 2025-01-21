@@ -14,7 +14,15 @@ export default function EmailEditor() {
     imageUrl: '',
     footer: ''
   });
-  const  [emailLayout , setEmailLayout]= useState([])
+     const dummydata=[{
+      title: 'Title',
+      content: 'Content : To sign up for Gmail, create a Google Account. You can use the username and password to sign in to Gmail and other Google products like YouTube, Google Play, and Google Drive.',
+      imageUrl: '/uploads/1737432077976-health_care.png',
+      footer: 'Footer : To sign up for Gmail, create a Google Account. You can use the username and password to sign in to Gmail and other Google products like YouTube, Google Play, and Google Drive.',
+      id: '5b6a56f9-e4ae-42bb-857d-6f748b15cf14',
+      created_at: '2025-01-21T04:01:19.961Z'
+    }]
+  const  [emailLayout , setEmailLayout]= useState(dummydata)
   const [titleColor, setTitleColor] = useState("#000000");
   const [showColorModal , setShowColorModal] = useState(false);
    

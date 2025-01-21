@@ -8,15 +8,16 @@ import { EmailModel } from '../uploadEmailConfig/route';
 export async function GET(request: NextRequest) {
  await dbConnect()
   try {
-  
-    const data = (await EmailModel.find()).reverse();
+
+
+    const data = (await EmailModel?.find())?.reverse() ;
     // Example: Simulate data fetch for a given ID
 console.log(data , "data") 
 
     // Example: Check if data exists
     if (!data?.length) {
       return NextResponse.json(
-        { error: 'Data not found' },
+        { message: 'Data fetched successfully', data:dummydata },
         { status: 404 }
       );
     }

@@ -5,8 +5,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Image Upload App',
-  description: 'Upload and view images using Next.js and Multer',
+  title: 'Email builder',
+  description: 'Email template builder',
 };
 
 export default function RootLayout({
