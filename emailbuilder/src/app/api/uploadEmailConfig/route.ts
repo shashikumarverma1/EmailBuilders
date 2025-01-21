@@ -1,9 +1,17 @@
 import dbConnect from '@/lib/db';
-import mongoose from 'mongoose';
-import {  NextResponse } from 'next/server';
+import mongoose, { Document, Model } from 'mongoose';
+import { NextRequest, NextResponse } from 'next/server';
 
-// Define the schema
-const emailSchema = new mongoose.Schema({
+// Define the schema interface
+interface Email extends Document {
+  title: string;
+  content: string;
+  imageUrl?: string; // Optional field
+  footer?: string; // Optional field
+}
+
+// Define the Mongoose schema
+const emailSchema = new mongoose.Schema<Email>({
   title: {
     type: String,
     required: true, // Ensure required fields are set
@@ -21,10 +29,11 @@ const emailSchema = new mongoose.Schema({
 });
 
 // Prevent model overwrite during hot-reloading
-export const EmailModel :any =
-  mongoose.models.Email || mongoose.model('Email', emailSchema);
+export const EmailModel: Model<Email> =
+  mongoose.models.Email || mongoose.model<Email>('Email', emailSchema);
 
-export async function POST(request: { json: () => any; }) {
+// Define the POST function with type annotations
+export async function POST(request: NextRequest): Promise<NextResponse> {
   // Connect to the database
   await dbConnect();
 
@@ -35,7 +44,7 @@ export async function POST(request: { json: () => any; }) {
     console.log('Received request body:', body);
 
     // Validate the request body
-    const { title, content,} = body;
+    const { title, content } = body;
     if (!title || !content) {
       return NextResponse.json(
         { error: 'Title and content are required' },
