@@ -28,7 +28,6 @@ export default function EmailEditor() {
    
 const GetEmailLayout=async()=>{
 const res= await axios.get("/api/getEmailLayout")
-console.log(res.data.data , "res.data.data")
 setEmailLayout(res.data.data)
 }
 
@@ -64,7 +63,9 @@ useEffect(() => {
 
   const  handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-   
+   if(template.title==='' || template.content==='' ){ 
+    alert("Title and content is required field")
+    }
 
     try {
        await axios.post("/api/uploadEmailConfig", { ...template ,  id: crypto.randomUUID(), created_at: new Date().toISOString() });
@@ -165,6 +166,7 @@ useEffect(() => {
               </div>
                 <input
                   type="text"
+                  required
                   value={template.title}
                   onChange={(e) => setTemplate(prev => ({ ...prev, title: e.target.value }))}
                   className="block w-full rounded-lg border-2 border-gray-200 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
@@ -177,6 +179,7 @@ useEffect(() => {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
                 <textarea
                   value={template.content}
+                   required
                   onChange={(e) => setTemplate(prev => ({ ...prev, content: e.target.value }))}
                   rows={6}
                   className="block w-full rounded-lg border-2 border-gray-200 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200"

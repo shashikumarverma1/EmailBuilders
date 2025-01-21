@@ -11,8 +11,6 @@ export async function GET() {
 
     const data = (await EmailModel?.find())?.reverse() ;
     // Example: Simulate data fetch for a given ID
-console.log(data , "data") 
-
     // Example: Check if data exists
     if (!data?.length) {
       return NextResponse.json(
