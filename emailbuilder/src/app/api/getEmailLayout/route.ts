@@ -1,7 +1,8 @@
 
 import dbConnect from '@/lib/db';
 import {  NextResponse } from 'next/server';
-import { EmailModel } from '../uploadEmailConfig/route';
+import { EmailModel } from '../modal/emailModal';
+
 
 
 export async function GET() {
