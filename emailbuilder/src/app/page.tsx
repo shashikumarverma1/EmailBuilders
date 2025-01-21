@@ -160,7 +160,7 @@ useEffect(() => {
         <div className="flex items-center justify-between">
           <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
           <button
-            className="text-blue-700"
+            className="text-blue-700 mb-2"
             onClick={() => setShowColorModal(!showColorModal)}
           >
             Edit color
