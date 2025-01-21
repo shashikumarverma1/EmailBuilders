@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {  Save, Download, Image as ImageIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { EmailTemplate } from '@/type/emailType';
-import { EmailLayout } from '@/lib/storage';
+import { EmailLayout } from '../../lib/storage';
 import { HexColorPicker } from 'react-colorful';
 import axios from 'axios';
 
@@ -46,6 +46,7 @@ useEffect(() => {
       const data = await response.json();
       setTemplate(prev => ({ ...prev, imageUrl: data.imageUrl }));
       // setUploadedImage(data.imageUrl);
+    
     } catch (error) {
       console.error('Error uploading image:', error);
     } finally {
@@ -60,22 +61,19 @@ useEffect(() => {
     try {
       const response = await axios.post("/api/uploadEmailConfig", { ...template ,  id: crypto.randomUUID(), created_at: new Date().toISOString() });
       toast.success('Template saved successfully');
+      GetEmailLayout()
+      setTemplate({
+        title: '',
+        content: '',
+        imageUrl: '',
+        footer: ''
+      })
     } catch (err: any) {
       console.log(err.response?.data?.message || "Something went wrong");
       toast.error('Error saving template');
     }
   };
-  const handleSubmit = async () => {
-    try {
-      // Save to localStorage
-      const templates = JSON.parse(localStorage.getItem('emailTemplates') || '[]');
-      templates.push({ ...template, id: crypto.randomUUID(), created_at: new Date().toISOString() });
-      localStorage.setItem('emailTemplates', JSON.stringify(templates));
-      toast.success('Template saved successfully');
-    } catch (error) {
-      toast.error('Error saving template');
-    }
-  };
+ 
 
   const handleDownload = async (template:any) => {
     try {

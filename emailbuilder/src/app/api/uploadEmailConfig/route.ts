@@ -1,29 +1,59 @@
+import dbConnect from '@/lib/db';
+import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
+// Define the schema
+const emailSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true, // Ensure required fields are set
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
+    type: String,
+  },
+  footer: {
+    type: String,
+  },
+});
+
+// Prevent model overwrite during hot-reloading
+export const EmailModel =
+  mongoose.models.Email ;
+
+export async function POST(request) {
+  // Connect to the database
+  await dbConnect();
+
   try {
     // Parse the request body
-    const body = await request.json(); // Use `await request.json()` for parsing JSON body in Next.js 13+
+    const body = await request.json();
 
-    console.log(body, "Received request body");
+    console.log('Received request body:', body);
 
-    // Add your processing logic here
-    // Example: Check if the required fields exist in the request body
-    if (!body || Object.keys(body).length === 0) {
+    // Validate the request body
+    const { title, content, imageUrl, footer } = body;
+    if (!title || !content) {
       return NextResponse.json(
-        { error: 'Request body is empty or invalid' },
+        { error: 'Title and content are required' },
         { status: 400 }
       );
     }
 
-    // Example: Return a success response
-    return NextResponse.json(
-      { message: 'File uploaded successfully', data: body },
-      { status: 200 }
-    );
+    // Save the new email document
+    const newEmail = new EmailModel(body);
+    await newEmail.save();
 
+    // Return a success response
+    return NextResponse.json(
+      { message: 'Email data saved successfully', data: newEmail },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error handling POST request:', error);
 
     // Return a 500 error response
     return NextResponse.json(

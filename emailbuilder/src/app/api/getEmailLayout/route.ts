@@ -1,52 +1,17 @@
-import { conectDb } from '@/helper/db';
+
+import dbConnect from '@/lib/db';
+import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
+import { EmailModel } from '../uploadEmailConfig/route';
 
 
 export async function GET(request: NextRequest) {
-  conectDb()
+ await dbConnect()
   try {
-    // Parse query parameters from the request URL
-    // const { searchParams } = new URL(request.url);
-    // const id = searchParams.get('id'); // Example: Fetch data by ID if provided
-
-    // console.log(id, "Received query parameter");
-
-    // Add your database or logic to fetch data here
-    // Example: If no ID is provided, return a generic message
-    // if (!id) {
-    //   return NextResponse.json(
-    //     { message: 'No ID provided. Fetching all data not implemented.' },
-    //     { status: 400 }
-    //   );
-    // }
-
+  
+    const data = (await EmailModel.find()).reverse();
     // Example: Simulate data fetch for a given ID
-    const data =[
-      {
-        title: 'kjjjkkjj',
-        content: 'hghgg',
-        imageUrl: '/uploads/1737332514167-health_care.png',
-        footer: '',
-        id: 'a3063127-b211-4ba1-9b29-511ab0a486df',
-        created_at: '2025-01-20T00:31:07.638Z'
-      },
-      {
-        title: 'kjjjkkjj',
-        content: 'hghgg',
-        imageUrl: '/uploads/1737332514167-health_care.png',
-        footer: '',
-        id: 'a3063127-b211-4ba1-9b29-511akb0a486df',
-        created_at: '2025-01-20T00:31:07.638Z'
-      },
-      {
-        title: 'kjjjkkjj',
-        content: 'hghgg',
-        imageUrl: '/uploads/1737332514167-health_care.png',
-        footer: '',
-        id: 'a3063127-b211-4ba1-9b29-511ab0a486dfjhh',
-        created_at: '2025-01-20T00:31:07.638Z'
-      }
-    ]
+console.log(data , "data") 
 
     // Example: Check if data exists
     if (!data?.length) {
