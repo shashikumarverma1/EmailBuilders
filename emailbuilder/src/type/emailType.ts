@@ -2,7 +2,7 @@ export interface EmailTemplate {
     id?: string;
     title: string;
     content: string;
-    imageUrl: any;
+    imageUrl: string;
     footer: string;
     created_at?: string;
   }

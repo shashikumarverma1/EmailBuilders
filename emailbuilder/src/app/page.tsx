@@ -67,7 +67,7 @@ useEffect(() => {
    
 
     try {
-      const response = await axios.post("/api/uploadEmailConfig", { ...template ,  id: crypto.randomUUID(), created_at: new Date().toISOString() });
+       await axios.post("/api/uploadEmailConfig", { ...template ,  id: crypto.randomUUID(), created_at: new Date().toISOString() });
       toast.success('Template saved successfully');
       GetEmailLayout()
       setTemplate({

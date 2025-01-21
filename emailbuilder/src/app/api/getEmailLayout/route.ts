@@ -1,11 +1,10 @@
 
 import dbConnect from '@/lib/db';
-import mongoose from 'mongoose';
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import { EmailModel } from '../uploadEmailConfig/route';
 
 
-export async function GET(request: NextRequest) {
+export async function GET() {
  await dbConnect()
   try {
 
@@ -17,7 +16,7 @@ console.log(data , "data")
     // Example: Check if data exists
     if (!data?.length) {
       return NextResponse.json(
-        { message: 'Data fetched successfully', data:dummydata },
+        { message: 'Data fetched successfully', data },
         { status: 404 }
       );
     }
